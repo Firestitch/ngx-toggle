@@ -5,6 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { FsToggleModule }  from '@firestitch/toggle';
 import { FormsModule } from '@angular/forms';
+import { OnInit } from '@angular/core/src/metadata/lifecycle_hooks';
 
 @Component({
   selector: 'app-root',
@@ -12,9 +13,13 @@ import { FormsModule } from '@angular/forms';
   styleUrls: [ 'styles.css' ],
   encapsulation: ViewEncapsulation.None
 })
-class AppComponent {
+class AppComponent implements OnInit {
   constructor() {}
-  selected = [];
+
+  selected = null;
+  selectedMultiple = null;
+  selectedIcon = null;
+
   list = [
     {
         id: 1,
@@ -34,7 +39,14 @@ class AppComponent {
   ];
 
 
-  ngOnInit() {  
+  ngOnInit() {
+    this.selected = this.list[1];
+    this.selectedMultiple = [this.list[0], this.list[2]];
+    this.selectedIcon = [this.list[1], this.list[2]];
+  }
+
+  change(value) {
+    console.log(value);
   }
 }
 

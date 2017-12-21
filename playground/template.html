@@ -1,8 +1,34 @@
-<fs-toggle-container>
-  <label>Test</label>
-  <fs-toggle [(ngModel)]="selected">
-    <fs-toggle-option [value]="item" *ngFor="let item of list">
-      {{ item.name }}
-    </fs-toggle-option>
-  </fs-toggle>
-</fs-toggle-container>
+<div>
+  <fs-toggle-container>
+    <label>Test</label>
+    <fs-toggle [(ngModel)]="selected" (change)="change($event)">
+      <fs-toggle-option [value]="item" *ngFor="let item of list">
+        {{ item.name }}
+      </fs-toggle-option>
+    </fs-toggle>
+  </fs-toggle-container>
+  {{ selected | json }}
+</div>
+<div>
+  <fs-toggle-container>
+    <label>Test</label>
+    <fs-toggle [(ngModel)]="selectedMultiple" fsMultiple="true">
+      <fs-toggle-option [value]="item" *ngFor="let item of list">
+        {{ item.name }}
+      </fs-toggle-option>
+    </fs-toggle>
+  </fs-toggle-container>
+  {{ selectedMultiple | json }}
+</div>
+
+<div>
+  <fs-toggle-container>
+    <label>Test</label>
+    <fs-toggle [(ngModel)]="selectedIcon" fsMultiple="true">
+      <fs-toggle-option [value]="item" *ngFor="let item of list" [fsIcon]="item.icon" fsWidth="100">
+        {{ item.name }}
+      </fs-toggle-option>
+    </fs-toggle>
+  </fs-toggle-container>
+  {{ selectedIcon | json }}
+</div>

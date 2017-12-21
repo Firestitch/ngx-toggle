@@ -1,3 +1,5 @@
+@import '~@angular/material/theming';
+
 .fs-toggle-option {
   border: 1px solid #888;
   border-radius: 4px;
@@ -14,6 +16,10 @@
   text-align: center;
   color: #fff;
 
+  .mat-icon {
+    vertical-align: middle;
+  }
+
   .fs-toggle-option-template {
     vertical-align: middle;
   }
@@ -25,6 +31,10 @@
     background-color: transparent !important;
     border-color: #888 !important;
     color: #888 !important;
+  }
+  &.selected {
+    background-color: mat-color($mat-indigo, 500);
+    border-color: mat-color($mat-indigo, 500);
   }
   &:last-child {
     margin: 0;

@@ -2,6 +2,7 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material';
+import { FsCommonModule } from '@firestitch/common';
 
 import { FsToggleContainerComponent } from './fstogglecontainer.component';
 import { FsToggleComponent } from './fstoggle.component';
@@ -16,7 +17,8 @@ import { FsToggleOptionComponent } from './fstoggleoption.component';
     imports: [
       CommonModule,
       FormsModule,
-      MatIconModule
+      MatIconModule,
+      FsCommonModule
     ],
     providers: [
     ],

@@ -1,5 +1,7 @@
-import { Component, Input, ViewChildren, ContentChildren, QueryList, ViewContainerRef, forwardRef, Provider, OnInit, AfterViewInit, OnChanges } from '@angular/core';
+import { Component, Input, Output, ViewChildren, EventEmitter, ContentChildren, QueryList,
+   ViewContainerRef, forwardRef, Provider, OnInit, AfterViewInit, OnChanges } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { FsArray } from '@firestitch/common';
 import { FsToggleOptionComponent } from './fstoggleoption.component';
 
 export const TOGGLE_VALUE_ACCESSOR: Provider = {
@@ -15,7 +17,11 @@ export const TOGGLE_VALUE_ACCESSOR: Provider = {
 })
 export class FsToggleComponent implements OnInit, AfterViewInit {
 
-  private _model = null;
+  @Input() fsMultiple = false;
+  @Output() change = new EventEmitter();
+
+  private _model: object[] | object = null;
+  private _toggleOptionComponents = [];
 
   @ContentChildren(FsToggleOptionComponent, { read: ViewContainerRef, descendants: true }) options: QueryList<FsToggleOptionComponent>;
 
@@ -28,45 +34,74 @@ export class FsToggleComponent implements OnInit, AfterViewInit {
   registerOnChange(fn: (value: any) => any): void { this._onChange = fn }
   registerOnTouched(fn: () => any): void { this._onTouched = fn }
 
-  constructor() { }
+  constructor(private fsArray: FsArray) { }
 
   ngOnInit() {
   }
 
   ngAfterViewInit() {
-    console.log(this.options);
-    /*
-    console.log(this.options.toArray());
-    this.options.changes
-      .subscribe((value) => {
-        console.log('Changed');
-      });
 
-      this.options.map(option => console.log(option))
-      */
-  }
-
-  writeValue(value: any): void {
-    // console.log(value);
-    this._model = value || [];
-  }
-
-  select($event) {
-    console.log($event);
-    /*
-    $scope.selected = true;
-    if(controller.$scope.multiple) {
-      var index = controller.$scope.model.indexOf($scope.value);
-      if(index>=0) {
-        controller.$scope.model.splice(index,1);
-        $scope.selected = false;
-      } else {
-        controller.$scope.model.push($scope.value);
-      }
-
-    } else {
-      controller.$scope.model = $scope.value;
+    for (const item of this.options.toArray()) {
+      this._toggleOptionComponents.push(item['_data'].componentView.component);
     }
-    */
+
+    for (const item of this._toggleOptionComponents) {
+
+      item.onClick = (value) => {
+        this.setValue(value);
+      };
+    }
+  }
+
+  setValue(value) {
+
+    if (this.fsMultiple) {
+      const index = this.findIndex(value);
+
+      if (index >= 0) {
+        (<object[]>this._model).splice(index, 1);
+      } else {
+        (<object[]>this._model).push(value);
+      }
+    }else {
+      this._model = value;
+    }
+
+    this.syncSelectedStatus();
+
+    this._onChange(this._model);
+    this.change.emit(this._model);
+  }
+
+  syncSelectedStatus() {
+    for (const item of this._toggleOptionComponents) {
+      if (this.fsMultiple) {
+        const index = this.findIndex(item.value);
+        if (index >= 0) {
+          item.selected = true;
+        }else {
+          item.selected = false;
+        }
+      }else {
+        item.selected = item.value == this._model;
+      }
+    };
+  }
+
+  findIndex(value) {
+    return value.id ? this.fsArray.indexOf(this._model, { id: value.id }) : (<object[]>this._model).indexOf(value);
+  }
+
+  writeValue(value): void {
+    if (value) {
+      this._model = value;
+
+      this.syncSelectedStatus();
+
+      this._onChange(this._model);
+      this.change.emit(this._model);
+    }else {
+      this._model = this.fsMultiple ? [] : {};
+    }
   }
 }
