@@ -1,42 +1,50 @@
 @import '~@angular/material/theming';
 
-.fs-toggle-option {
-  border: 1px solid #888;
-  border-radius: 4px;
+:host {
+
   margin-right: 5px;
-  display: inline-block;
-  padding: 5px 8px;
-  cursor: pointer;
-  -webkit-touch-callout:none;
-  -webkit-user-select:none;
-  -moz-user-select:none;
-  -ms-user-select:none;
-  user-select:none;
-  outline: none;
-  text-align: center;
-  color: #fff;
 
-  .mat-icon {
-    vertical-align: middle;
-  }
-
-  .fs-toggle-option-template {
-    vertical-align: middle;
-  }
-
-  &.selected mat-icon {
-    color: #fff;
-  }
-  &:not(.selected) {
-    background-color: transparent !important;
-    border-color: #888 !important;
-    color: #888 !important;
-  }
-  &.selected {
-    background-color: mat-color($mat-indigo, 500);
-    border-color: mat-color($mat-indigo, 500);
-  }
   &:last-child {
     margin: 0;
   }
+
+  .fs-toggle-option {
+    border: 1px solid mat-color($mat-blue, 500);
+    border-radius: 4px;
+    
+    display: inline-block;
+    padding: 5px 8px;
+    cursor: pointer;
+    -webkit-touch-callout:none;
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+    outline: none;
+    text-align: center;
+    color: #fff;
+  
+    .mat-icon {
+      vertical-align: middle;
+    }
+  
+    .fs-toggle-option-template {
+      vertical-align: middle;
+    }
+  
+    &.selected mat-icon {
+      color: #fff;
+    }
+    &:not(.selected) {
+      background-color: transparent !important;
+      border-color: mat-color($mat-blue, 500) !important;
+      color: mat-color($mat-blue, 500) !important;
+    }
+    &.selected {
+      background-color: mat-color($mat-blue, 500);
+      border-color: mat-color($mat-blue, 500);
+    }
+  }
 }
+
+

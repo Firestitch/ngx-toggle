@@ -40,8 +40,7 @@ export class FsToggleComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-
-    for (const item of this.options.toArray()) {
+    for (const item of this.options['_results']) {
       this._toggleOptionComponents.push(item['_data'].componentView.component);
     }
 
