@@ -1,5 +1,5 @@
 import { Component, Input, Output, ViewChildren, EventEmitter, ContentChildren, QueryList,
-   ViewContainerRef, forwardRef, Provider, OnInit, DoCheck, IterableDiffers } from '@angular/core';
+   ViewContainerRef, forwardRef, Provider, OnInit, DoCheck, IterableDiffers, AfterViewChecked, AfterViewInit } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { FsArray } from '@firestitch/common';
 import { FsToggleOptionComponent } from './fstoggleoption.component';
@@ -43,26 +43,28 @@ export class FsToggleComponent implements OnInit, DoCheck {
   }
 
   ngDoCheck() {
-    if (this.options && this._childrenDiffer.diff(this.options['_results'])) {
+    setTimeout(() => {
+      if (this.options && this._childrenDiffer.diff(this.options['_results'])) {
 
-      for (const item of this.options['_results']) {
-        this._toggleOptionComponents.push(item['_data'].componentView.component);
+        for (const item of this.options['_results']) {
+          this._toggleOptionComponents.push(item['_data'].componentView.component);
+        }
+
+        for (const item of this._toggleOptionComponents) {
+
+          item.onClick = (value) => {
+            this.setValue(value);
+          };
+        }
+
+        if (this._model) {
+          this.syncSelectedStatus();
+
+          this._onChange(this._model);
+          this.change.emit(this._model);
+        }
       }
-
-      for (const item of this._toggleOptionComponents) {
-
-        item.onClick = (value) => {
-          this.setValue(value);
-        };
-      }
-
-      if (this._model) {
-        this.syncSelectedStatus();
-
-        this._onChange(this._model);
-        this.change.emit(this._model);
-      }
-    }
+    });
   }
 
   setValue(value) {
