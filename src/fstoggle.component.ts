@@ -1,5 +1,5 @@
 import { Component, Input, Output, ViewChildren, EventEmitter, ContentChildren, QueryList,
-   ViewContainerRef, forwardRef, Provider, OnInit, AfterViewInit, OnChanges } from '@angular/core';
+   ViewContainerRef, forwardRef, Provider, OnInit, DoCheck, IterableDiffers } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { FsArray } from '@firestitch/common';
 import { FsToggleOptionComponent } from './fstoggleoption.component';
@@ -15,13 +15,14 @@ export const TOGGLE_VALUE_ACCESSOR: Provider = {
     template: '<ng-content></ng-content>',
     providers: [TOGGLE_VALUE_ACCESSOR]
 })
-export class FsToggleComponent implements OnInit, AfterViewInit {
+export class FsToggleComponent implements OnInit, DoCheck {
 
   @Input() fsMultiple = false;
   @Output() change = new EventEmitter();
 
   private _model: object[] | object = null;
   private _toggleOptionComponents = [];
+  private _childrenDiffer = null;
 
   @ContentChildren(FsToggleOptionComponent, { read: ViewContainerRef, descendants: true }) options: QueryList<FsToggleOptionComponent>;
 
@@ -34,21 +35,33 @@ export class FsToggleComponent implements OnInit, AfterViewInit {
   registerOnChange(fn: (value: any) => any): void { this._onChange = fn }
   registerOnTouched(fn: () => any): void { this._onTouched = fn }
 
-  constructor(private fsArray: FsArray) { }
+  constructor(private fsArray: FsArray, private _iterableDiffers: IterableDiffers) {
+    this._childrenDiffer = this._iterableDiffers.find([]).create(null);
+  }
 
   ngOnInit() {
   }
 
-  ngAfterViewInit() {
-    for (const item of this.options['_results']) {
-      this._toggleOptionComponents.push(item['_data'].componentView.component);
-    }
+  ngDoCheck() {
+    if (this.options && this._childrenDiffer.diff(this.options['_results'])) {
 
-    for (const item of this._toggleOptionComponents) {
+      for (const item of this.options['_results']) {
+        this._toggleOptionComponents.push(item['_data'].componentView.component);
+      }
 
-      item.onClick = (value) => {
-        this.setValue(value);
-      };
+      for (const item of this._toggleOptionComponents) {
+
+        item.onClick = (value) => {
+          this.setValue(value);
+        };
+      }
+
+      if (this._model) {
+        this.syncSelectedStatus();
+
+        this._onChange(this._model);
+        this.change.emit(this._model);
+      }
     }
   }
 
@@ -94,11 +107,6 @@ export class FsToggleComponent implements OnInit, AfterViewInit {
   writeValue(value): void {
     if (value) {
       this._model = value;
-
-      this.syncSelectedStatus();
-
-      this._onChange(this._model);
-      this.change.emit(this._model);
     }else {
       this._model = this.fsMultiple ? [] : {};
     }
