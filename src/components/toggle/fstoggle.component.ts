@@ -2,7 +2,7 @@ import { Component, Input, Output, ViewChildren, EventEmitter, ContentChildren, 
    ViewContainerRef, forwardRef, Provider, OnInit, DoCheck, IterableDiffers, AfterViewChecked, AfterViewInit } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { FsArray } from '@firestitch/common';
-import { FsToggleOptionComponent } from './fstoggleoption.component';
+import { FsToggleOptionComponent } from '../toggle-options/fstoggleoption.component';
 
 export const TOGGLE_VALUE_ACCESSOR: Provider = {
   provide: NG_VALUE_ACCESSOR,
