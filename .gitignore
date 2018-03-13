@@ -31,7 +31,9 @@ Desktop.ini
 # Build files
 dist/*
 
+
 # Playground tmp files
+.sass-cache
 .playground
 /.tmp
 /build
