@@ -1,14 +1,13 @@
-import { Renderer, ElementRef, OnInit } from '@angular/core';
+import { OnInit } from '@angular/core';
 export declare class FsToggleOptionComponent implements OnInit {
-    private elementRef;
-    private renderer;
     value: any;
     selected: boolean;
     style: {};
     fsWidth: any;
     fsIcon: any;
-    onClick: (object) => void;
-    constructor(elementRef: ElementRef, renderer: Renderer);
+    private subject;
+    constructor();
     ngOnInit(): void;
-    select(): void;
+    click(): void;
+    subscribe(fn: any): void;
 }

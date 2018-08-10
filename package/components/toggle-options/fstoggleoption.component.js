@@ -10,20 +10,23 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
+var Subject_1 = require("rxjs/Subject");
 var FsToggleOptionComponent = (function () {
-    function FsToggleOptionComponent(elementRef, renderer) {
-        this.elementRef = elementRef;
-        this.renderer = renderer;
+    function FsToggleOptionComponent() {
         this.selected = false;
         this.style = {};
+        this.subject = new Subject_1.Subject();
     }
     FsToggleOptionComponent.prototype.ngOnInit = function () {
         if (this.fsWidth) {
             this.style['width'] = this.fsWidth + 'px';
         }
     };
-    FsToggleOptionComponent.prototype.select = function () {
-        this.onClick(this.value);
+    FsToggleOptionComponent.prototype.click = function () {
+        this.subject.next(this.value);
+    };
+    FsToggleOptionComponent.prototype.subscribe = function (fn) {
+        this.subject.asObservable().subscribe(fn);
     };
     __decorate([
         core_1.Input(),
@@ -48,10 +51,10 @@ var FsToggleOptionComponent = (function () {
     FsToggleOptionComponent = __decorate([
         core_1.Component({
             selector: 'fs-toggle-option',
-            template: "\n    <div fxLayoutAlign=\"start center\" class=\"fs-toggle-option\" (click)=\"select()\"\n    [ngClass]=\"{ selected: selected }\"\n    [ngStyle]=\"style\">\n      <mat-icon *ngIf=\"fsIcon\">{{ fsIcon }}</mat-icon>\n      <span class=\"fs-toggle-option-template\">\n        <ng-content></ng-content>\n      </span>\n    </div>",
+            template: "\n    <div fxLayoutAlign=\"start center\" class=\"fs-toggle-option\" (click)=\"click()\"\n    [ngClass]=\"{ selected: selected }\"\n    [ngStyle]=\"style\">\n      <mat-icon *ngIf=\"fsIcon\">{{ fsIcon }}</mat-icon>\n      <span class=\"fs-toggle-option-template\">\n        <ng-content></ng-content>\n      </span>\n    </div>",
             styleUrls: ['./fstoggleoption.css']
         }),
-        __metadata("design:paramtypes", [core_1.ElementRef, core_1.Renderer])
+        __metadata("design:paramtypes", [])
     ], FsToggleOptionComponent);
     return FsToggleOptionComponent;
 }());

@@ -1,9 +1,10 @@
-import { Component, Input, Output, Renderer, ElementRef, EventEmitter, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Subject } from 'rxjs/Subject';
 
 @Component({
     selector: 'fs-toggle-option',
     template: `
-    <div fxLayoutAlign="start center" class="fs-toggle-option" (click)="select()"
+    <div fxLayoutAlign="start center" class="fs-toggle-option" (click)="click()"
     [ngClass]="{ selected: selected }"
     [ngStyle]="style">
       <mat-icon *ngIf="fsIcon">{{ fsIcon }}</mat-icon>
@@ -20,10 +21,9 @@ export class FsToggleOptionComponent implements OnInit {
   @Input() style = {};
   @Input() fsWidth;
   @Input() fsIcon;
+  private subject = new Subject();
 
-  onClick: (object) => void;
-
-  constructor(private elementRef: ElementRef, private renderer: Renderer) { }
+  constructor() { }
 
   ngOnInit() {
     if (this.fsWidth) {
@@ -31,7 +31,11 @@ export class FsToggleOptionComponent implements OnInit {
     }
   }
 
-  select() {
-    this.onClick(this.value);
+  click() {
+    this.subject.next(this.value);
+  }
+
+  subscribe(fn) {
+    this.subject.asObservable().subscribe(fn);
   }
 }

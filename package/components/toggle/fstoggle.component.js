@@ -19,50 +19,36 @@ exports.TOGGLE_VALUE_ACCESSOR = {
     multi: true
 };
 var FsToggleComponent = (function () {
-    function FsToggleComponent(fsArray, _iterableDiffers) {
-        this.fsArray = fsArray;
-        this._iterableDiffers = _iterableDiffers;
+    function FsToggleComponent() {
         this.fsMultiple = false;
         this.change = new core_1.EventEmitter();
         this._model = null;
-        this._toggleOptionComponents = [];
-        this._childrenDiffer = null;
-        // event hooks for VALUE_ACCESSOR. those are used to imitate real input behavior and emit events outside the directive, e.g. "touched"
+        this.registeredFsToggleOptionComponents = [];
         this._onTouched = function () { };
         this._onChange = function (value) { };
         this.onFocused = function (event) { };
-        this._childrenDiffer = this._iterableDiffers.find([]).create(null);
     }
-    // we initiate those functions to emit events outside the component
     FsToggleComponent.prototype.registerOnChange = function (fn) { this._onChange = fn; };
     FsToggleComponent.prototype.registerOnTouched = function (fn) { this._onTouched = fn; };
-    FsToggleComponent.prototype.ngOnInit = function () {
+    FsToggleComponent.prototype.ngAfterContentInit = function () {
+        this.registerFsToggleOptionComponents();
+        this.options.changes.subscribe(this.registerFsToggleOptionComponents);
     };
-    FsToggleComponent.prototype.ngDoCheck = function () {
+    FsToggleComponent.prototype.registerFsToggleOptionComponents = function () {
         var _this = this;
-        setTimeout(function () {
-            if (_this.options && _this._childrenDiffer.diff(_this.options['_results'])) {
-                for (var _i = 0, _a = _this.options['_results']; _i < _a.length; _i++) {
-                    var item = _a[_i];
-                    _this._toggleOptionComponents.push(item['_data'].componentView.component);
-                }
-                for (var _b = 0, _c = _this._toggleOptionComponents; _b < _c.length; _b++) {
-                    var item = _c[_b];
-                    item.onClick = function (value) {
-                        _this.setValue(value);
-                    };
-                }
-                if (_this._model) {
-                    _this.syncSelectedStatus();
-                    _this._onChange(_this._model);
-                    _this.change.emit(_this._model);
-                }
+        this.options.forEach(function (component) {
+            if (_this.registeredFsToggleOptionComponents.indexOf(component) < 0) {
+                _this.registeredFsToggleOptionComponents.push(component);
+                component.subscribe(function (value) {
+                    _this.setValue(component, value);
+                });
             }
         });
     };
-    FsToggleComponent.prototype.setValue = function (value) {
+    FsToggleComponent.prototype.setValue = function (component, value) {
         if (this.fsMultiple) {
-            var index = this.findIndex(value);
+            var index = common_1.indexOf(this._model, component.value);
+            component.selected = index < 0;
             if (index >= 0) {
                 this._model.splice(index, 1);
             }
@@ -71,39 +57,32 @@ var FsToggleComponent = (function () {
             }
         }
         else {
+            this.options.forEach(function (item) {
+                item.selected = false;
+            });
+            component.selected = true;
             this._model = value;
         }
-        this.syncSelectedStatus();
         this._onChange(this._model);
         this.change.emit(this._model);
     };
-    FsToggleComponent.prototype.syncSelectedStatus = function () {
-        for (var _i = 0, _a = this._toggleOptionComponents; _i < _a.length; _i++) {
-            var item = _a[_i];
-            if (this.fsMultiple) {
-                var index = this.findIndex(item.value);
-                if (index >= 0) {
-                    item.selected = true;
-                }
-                else {
-                    item.selected = false;
-                }
-            }
-            else {
-                item.selected = item.value == this._model;
-            }
-        }
-        ;
-    };
-    FsToggleComponent.prototype.findIndex = function (value) {
-        return value.id ? this.fsArray.indexOf(this._model, { id: value.id }) : this._model.indexOf(value);
-    };
     FsToggleComponent.prototype.writeValue = function (value) {
+        var _this = this;
         if (value) {
             this._model = value;
         }
         else {
-            this._model = this.fsMultiple ? [] : {};
+            this._model = this.fsMultiple ? [] : null;
+        }
+        if (this.options) {
+            this.options.forEach(function (component) {
+                if (_this.fsMultiple) {
+                    component.selected = common_1.indexOf(_this._model, component.value) >= 0;
+                }
+                else {
+                    component.selected = _this._model === component.value;
+                }
+            });
         }
     };
     __decorate([
@@ -115,7 +94,7 @@ var FsToggleComponent = (function () {
         __metadata("design:type", Object)
     ], FsToggleComponent.prototype, "change", void 0);
     __decorate([
-        core_1.ContentChildren(fstoggleoption_component_1.FsToggleOptionComponent, { read: core_1.ViewContainerRef, descendants: true }),
+        core_1.ContentChildren(fstoggleoption_component_1.FsToggleOptionComponent, { descendants: true }),
         __metadata("design:type", core_1.QueryList)
     ], FsToggleComponent.prototype, "options", void 0);
     FsToggleComponent = __decorate([
@@ -124,7 +103,7 @@ var FsToggleComponent = (function () {
             template: '<ng-content></ng-content>',
             providers: [exports.TOGGLE_VALUE_ACCESSOR]
         }),
-        __metadata("design:paramtypes", [common_1.FsArray, core_1.IterableDiffers])
+        __metadata("design:paramtypes", [])
     ], FsToggleComponent);
     return FsToggleComponent;
 }());

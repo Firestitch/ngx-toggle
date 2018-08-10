@@ -2,8 +2,8 @@
   "name": "@firestitch/toggle",
   "description": "@firestitch/toggle",
   "version": "0.1.7",
-  "main": "package/index.js",
-  "typings": "package/index.d.ts",
+  "main": "index.js",
+  "typings": "index.d.ts",
   "scripts": {
     "package": "cd tools && npm run package",
     "package:publish": "cd tools && npm run package:publish",

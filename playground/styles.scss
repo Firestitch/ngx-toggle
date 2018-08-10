@@ -1,0 +1,6 @@
+@import '~@angular/material/theming';
+
+@import './../tools/assets/playground.scss';
+@import '../src/styles.scss';
+
+@include fs-toggle($mat-blue);
