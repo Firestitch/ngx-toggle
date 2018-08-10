@@ -41,3 +41,5 @@ dist/*
 /node_modules
 /.playground
 /dll
+/demo
+/package
