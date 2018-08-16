@@ -13,7 +13,8 @@ export const TOGGLE_VALUE_ACCESSOR: Provider = {
 @Component({
     selector: 'fs-toggle',
     template: '<ng-content></ng-content>',
-    providers: [TOGGLE_VALUE_ACCESSOR]
+    providers: [TOGGLE_VALUE_ACCESSOR],
+    styleUrls: ['./fstoggle.component.scss']
 })
 export class FsToggleComponent implements AfterContentInit {
 

@@ -12,7 +12,7 @@ import { Subject } from 'rxjs/Subject';
         <ng-content></ng-content>
       </span>
     </div>`,
-    styleUrls: ['./fstoggleoption.scss']
+    styleUrls: ['./fstoggleoption.component.scss']
 })
 export class FsToggleOptionComponent implements OnInit {
 
