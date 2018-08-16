@@ -1,7 +1,7 @@
 {
   "name": "@firestitch/toggle",
   "description": "@firestitch/toggle",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "main": "package/index.js",
   "typings": "package/index.d.ts",
   "scripts": {
