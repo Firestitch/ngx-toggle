@@ -36,7 +36,9 @@ export class FsToggleComponent implements AfterContentInit {
 
   ngAfterContentInit() {
     this.registerFsToggleOptionComponents();
-    this.options.changes.subscribe(this.registerFsToggleOptionComponents);
+    this.options.changes.subscribe(() => {
+      this.registerFsToggleOptionComponents();
+    });
   }
 
   private registerFsToggleOptionComponents() {

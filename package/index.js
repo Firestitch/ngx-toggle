@@ -404,8 +404,11 @@ var FsToggleComponent = (function () {
     FsToggleComponent.prototype.registerOnChange = function (fn) { this._onChange = fn; };
     FsToggleComponent.prototype.registerOnTouched = function (fn) { this._onTouched = fn; };
     FsToggleComponent.prototype.ngAfterContentInit = function () {
+        var _this = this;
         this.registerFsToggleOptionComponents();
-        this.options.changes.subscribe(this.registerFsToggleOptionComponents);
+        this.options.changes.subscribe(function () {
+            _this.registerFsToggleOptionComponents();
+        });
     };
     FsToggleComponent.prototype.registerFsToggleOptionComponents = function () {
         var _this = this;

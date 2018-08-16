@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { guid } from '@firestitch/common/util/guid';
 
 
 @Component({
@@ -17,22 +18,22 @@ export class SecondExampleComponent implements OnInit {
   ngOnInit() {
       this.list = [
       {
-          id: 1,
+          id: guid(),
           name: 'Ray',
           icon: 'sentiment_satisfied'
       },
       {
-          id: 2,
+          id: guid(),
           name: 'Jim',
           icon: 'sentiment_neutral'
       },
       {
-          id: 3,
+          id: guid(),
           name: 'Billy',
           icon: 'sentiment_dissatisfied'
       },
       {
-        id: 4,
+        id: guid(),
         name: 'Bob',
         icon: 'sentiment_dissatisfied'
       }
@@ -43,5 +44,30 @@ export class SecondExampleComponent implements OnInit {
 
   change(value) {
     console.log(value);
+  }
+
+  listAdd() {
+    this.list = this.list.concat([
+      {
+          id: guid(),
+          name: 'Keith',
+          icon: 'sentiment_satisfied'
+      },
+      {
+          id: guid(),
+          name: 'Wendy',
+          icon: 'sentiment_neutral'
+      },
+      {
+          id: guid(),
+          name: 'Shawn',
+          icon: 'sentiment_dissatisfied'
+      },
+      {
+        id: guid(),
+        name: 'Dave',
+        icon: 'sentiment_dissatisfied'
+      }
+    ]);
   }
 }
