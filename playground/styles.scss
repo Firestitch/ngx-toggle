@@ -1,6 +1,7 @@
-@import '~@angular/material/theming';
+@import '../tools/assets/playground.scss';
 
-@import './../tools/assets/playground.scss';
-@import '../src/styles.scss';
+@import '~@firestitch/message/styles';
+
+@import '../src/app/styles';
 
 @include fs-toggle($mat-blue);

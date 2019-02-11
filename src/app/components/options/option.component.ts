@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Subject } from 'rxjs/Subject';
+import { Subject } from 'rxjs';
+
 
 @Component({
     selector: 'fs-toggle-option',
@@ -12,7 +13,7 @@ import { Subject } from 'rxjs/Subject';
         <ng-content></ng-content>
       </span>
     </div>`,
-    styleUrls: ['./fstoggleoption.component.scss']
+    styleUrls: ['./option.component.scss']
 })
 export class FsToggleOptionComponent implements OnInit {
 
@@ -25,17 +26,17 @@ export class FsToggleOptionComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  public ngOnInit() {
     if (this.fsWidth) {
       this.style['width'] = this.fsWidth + 'px';
     }
   }
 
-  click() {
+  public click() {
     this.subject.next(this.value);
   }
 
-  subscribe(fn) {
+  public subscribe(fn) {
     this.subject.asObservable().subscribe(fn);
   }
 }

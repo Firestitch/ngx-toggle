@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 
+
 @Component({
     selector: 'fs-toggle-container',
     template: '<ng-content></ng-content>',
-    styleUrls: ['./fstogglecontainer.scss']
+    styleUrls: ['./container.scss']
 })
-export class FsToggleContainerComponent{
-
+export class FsToggleContainerComponent {
   constructor() { }
 }

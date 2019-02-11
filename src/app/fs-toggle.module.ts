@@ -1,12 +1,12 @@
-import { NgModule, ModuleWithProviders } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material';
 import { FsCommonModule } from '@firestitch/common';
 
-import { FsToggleContainerComponent } from './components/toggle-container/fstogglecontainer.component';
-import { FsToggleComponent } from './components/toggle/fstoggle.component';
-import { FsToggleOptionComponent } from './components/toggle-options/fstoggleoption.component';
+import { FsToggleContainerComponent } from './components/container/container.component';
+import { FsToggleComponent } from './components/toggle/toggle.component';
+import { FsToggleOptionComponent } from './components/options/option.component';
+
 
 @NgModule({
     declarations: [
@@ -16,7 +16,6 @@ import { FsToggleOptionComponent } from './components/toggle-options/fstoggleopt
     ],
     imports: [
       CommonModule,
-      FormsModule,
       MatIconModule,
       FsCommonModule
     ],
@@ -29,10 +28,10 @@ import { FsToggleOptionComponent } from './components/toggle-options/fstoggleopt
     ]
 })
 export class FsToggleModule {
-  static forRoot(): ModuleWithProviders {
+  /*static forRoot(): ModuleWithProviders {
     return {
       ngModule: FsToggleModule,
       providers: []
     };
-  }
+  }*/
 }

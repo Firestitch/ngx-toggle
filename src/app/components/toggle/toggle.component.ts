@@ -1,8 +1,20 @@
-import {  Component, Input, Output, AfterContentInit, EventEmitter, ContentChildren, QueryList,
-          forwardRef, Provider } from '@angular/core';
+import {
+  AfterContentInit,
+  Component,
+  ContentChildren,
+  EventEmitter,
+  forwardRef,
+  Input,
+  Output,
+  Provider,
+  QueryList
+} from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
+
 import { indexOf } from '@firestitch/common';
-import { FsToggleOptionComponent } from '../toggle-options/fstoggleoption.component';
+
+import { FsToggleOptionComponent } from '../options/option.component';
+
 
 export const TOGGLE_VALUE_ACCESSOR: Provider = {
   provide: NG_VALUE_ACCESSOR,
@@ -10,11 +22,12 @@ export const TOGGLE_VALUE_ACCESSOR: Provider = {
   multi: true
 };
 
+
 @Component({
     selector: 'fs-toggle',
     template: '<ng-content></ng-content>',
     providers: [TOGGLE_VALUE_ACCESSOR],
-    styleUrls: ['./fstoggle.component.scss']
+    styleUrls: ['./toggle.component.scss']
 })
 export class FsToggleComponent implements AfterContentInit {
 

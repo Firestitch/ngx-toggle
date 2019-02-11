@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { guid } from '@firestitch/common/util/guid';
+import { guid } from '@firestitch/common';
 
 
 @Component({
