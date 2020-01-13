@@ -1,5 +1,6 @@
 import {
   AfterContentInit,
+  ChangeDetectionStrategy,
   Component,
   ContentChildren,
   EventEmitter,
@@ -9,7 +10,7 @@ import {
   Provider,
   QueryList
 } from '@angular/core';
-import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 import { indexOf } from '@firestitch/common';
 
@@ -24,12 +25,13 @@ export const TOGGLE_VALUE_ACCESSOR: Provider = {
 
 
 @Component({
-    selector: 'fs-toggle',
-    template: '<ng-content></ng-content>',
-    providers: [TOGGLE_VALUE_ACCESSOR],
-    styleUrls: ['./toggle.component.scss']
+  selector: 'fs-toggle',
+  template: '<ng-content></ng-content>',
+  providers: [TOGGLE_VALUE_ACCESSOR],
+  styleUrls: ['./toggle.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FsToggleComponent implements AfterContentInit {
+export class FsToggleComponent implements AfterContentInit, ControlValueAccessor {
 
   @Input() fsMultiple = false;
   @Output() change = new EventEmitter();
@@ -39,14 +41,23 @@ export class FsToggleComponent implements AfterContentInit {
 
   @ContentChildren(FsToggleOptionComponent, { descendants: true }) options: QueryList<FsToggleOptionComponent>;
 
-  _onTouched = () => { };
-  _onChange = (value: any) => { };
-  onFocused = (event: any) => { };
+  _onTouched = () => {
+  };
+  _onChange = (value: any) => {
+  };
+  onFocused = (event: any) => {
+  };
 
-  registerOnChange(fn: (value: any) => any): void { this._onChange = fn }
-  registerOnTouched(fn: () => any): void { this._onTouched = fn }
+  registerOnChange(fn: (value: any) => any): void {
+    this._onChange = fn
+  }
 
-  constructor() {}
+  registerOnTouched(fn: () => any): void {
+    this._onTouched = fn
+  }
+
+  constructor() {
+  }
 
   ngAfterContentInit() {
     this.registerFsToggleOptionComponents();

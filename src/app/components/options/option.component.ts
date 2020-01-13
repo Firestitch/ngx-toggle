@@ -1,19 +1,20 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 
 
 @Component({
-    selector: 'fs-toggle-option',
-    template: `
+  selector: 'fs-toggle-option',
+  template: `
     <div fxLayoutAlign="start center" class="fs-toggle-option" (click)="click()"
-    [ngClass]="{ selected: selected }"
-    [ngStyle]="style">
+         [ngClass]="{ selected: selected }"
+         [ngStyle]="style">
       <mat-icon *ngIf="fsIcon">{{ fsIcon }}</mat-icon>
       <span class="fs-toggle-option-template">
         <ng-content></ng-content>
       </span>
     </div>`,
-    styleUrls: ['./option.component.scss']
+  styleUrls: ['./option.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FsToggleOptionComponent implements OnInit {
 
@@ -24,7 +25,8 @@ export class FsToggleOptionComponent implements OnInit {
   @Input() fsIcon;
   private subject = new Subject();
 
-  constructor() { }
+  constructor() {
+  }
 
   public ngOnInit() {
     if (this.fsWidth) {
