@@ -1,19 +1,19 @@
-@import '~@angular/material/theming';
+@use '~@angular/material' as mat;
 
 @mixin fs-toggle($theme) {
 
-  $primary: mat-palette($theme);
+  $primary: mat.define-palette($theme);
 
     .fs-toggle-option {
-      border: 1px solid mat-color($primary);
+      border: 1px solid mat.get-color-from-palette($primary);
 
       &:not(.selected) {
-        border-color: mat-color($primary) !important;
-        color: mat-color($primary) !important;
+        border-color: mat.get-color-from-palette($primary) !important;
+        color: mat.get-color-from-palette($primary) !important;
       }
       &.selected {
-        background-color: mat-color($primary);
-        border-color: mat-color($primary);
+        background-color: mat.get-color-from-palette($primary);
+        border-color: mat.get-color-from-palette($primary);
       }
     }
   }
