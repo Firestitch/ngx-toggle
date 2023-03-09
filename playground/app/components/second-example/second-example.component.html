@@ -1,6 +1,6 @@
 <fs-toggle-container>
   <label>Test</label>
-  <fs-toggle [(ngModel)]="selected" fsMultiple="true">
+  <fs-toggle [(ngModel)]="selected" [fsMultiple]="true">
     <fs-toggle-option [value]="item" *ngFor="let item of list">
       {{ item.name }}
     </fs-toggle-option>
