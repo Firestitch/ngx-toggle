@@ -2,18 +2,18 @@
 
 @mixin fs-toggle($theme) {
 
-  $primary: mat.define-palette($theme);
+  $primary: mat.m2-define-palette($theme);
 
     .fs-toggle-option {
-      border: 1px solid mat.get-color-from-palette($primary);
+      border: 1px solid mat.m2-get-color-from-palette($primary);
 
       &:not(.selected) {
-        border-color: mat.get-color-from-palette($primary) !important;
-        color: mat.get-color-from-palette($primary) !important;
+        border-color: mat.m2-get-color-from-palette($primary) !important;
+        color: mat.m2-get-color-from-palette($primary) !important;
       }
       &.selected {
-        background-color: mat.get-color-from-palette($primary);
-        border-color: mat.get-color-from-palette($primary);
+        background-color: mat.m2-get-color-from-palette($primary);
+        border-color: mat.m2-get-color-from-palette($primary);
       }
     }
   }
