@@ -1,9 +1,11 @@
 <fs-toggle-container>
   <label>Test</label>
   <fs-toggle [(ngModel)]="selected" (change)="change($event)">
-    <fs-toggle-option [value]="item" *ngFor="let item of list">
-      {{ item.name }}
-    </fs-toggle-option>
+    @for (item of list; track item) {
+      <fs-toggle-option [value]="item">
+        {{ item.name }}
+      </fs-toggle-option>
+    }
   </fs-toggle>
 </fs-toggle-container>
 

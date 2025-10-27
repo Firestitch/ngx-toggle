@@ -6,9 +6,11 @@ import { Subject } from 'rxjs';
   selector: 'fs-toggle-option',
   template: `
     <div fxLayoutAlign="start center" class="fs-toggle-option" (click)="click()"
-         [ngClass]="{ selected: selected }"
-         [ngStyle]="style">
-      <mat-icon *ngIf="fsIcon">{{ fsIcon }}</mat-icon>
+      [ngClass]="{ selected: selected }"
+      [ngStyle]="style">
+      @if (fsIcon) {
+        <mat-icon>{{ fsIcon }}</mat-icon>
+      }
       <span class="fs-toggle-option-template">
         <ng-content></ng-content>
       </span>
