@@ -25,11 +25,12 @@ export const TOGGLE_VALUE_ACCESSOR: Provider = {
 
 
 @Component({
-  selector: 'fs-toggle',
-  template: '<ng-content></ng-content>',
-  providers: [TOGGLE_VALUE_ACCESSOR],
-  styleUrls: ['./toggle.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'fs-toggle',
+    template: '<ng-content></ng-content>',
+    providers: [TOGGLE_VALUE_ACCESSOR],
+    styleUrls: ['./toggle.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
 })
 export class FsToggleComponent implements AfterContentInit, ControlValueAccessor {
 

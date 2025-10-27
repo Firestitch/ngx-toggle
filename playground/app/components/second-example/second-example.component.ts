@@ -1,11 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { guid } from '@firestitch/common';
+import { FsToggleContainerComponent } from '../../../../src/app/components/container/container.component';
+import { FsToggleComponent } from '../../../../src/app/components/toggle/toggle.component';
+import { FormsModule } from '@angular/forms';
+import { FsToggleOptionComponent } from '../../../../src/app/components/options/option.component';
+import { MatButton } from '@angular/material/button';
+import { JsonPipe } from '@angular/common';
 
 
 @Component({
-  selector: 'second-example',
-  templateUrl: 'second-example.component.html',
-  styleUrls: [ 'second-example.component.css' ]
+    selector: 'second-example',
+    templateUrl: 'second-example.component.html',
+    styleUrls: ['second-example.component.css'],
+    standalone: true,
+    imports: [FsToggleContainerComponent, FsToggleComponent, FormsModule, FsToggleOptionComponent, MatButton, JsonPipe]
 })
 export class SecondExampleComponent implements OnInit {
 

@@ -1,10 +1,12 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
+import { NgClass, NgStyle } from '@angular/common';
+import { MatIcon } from '@angular/material/icon';
 
 
 @Component({
-  selector: 'fs-toggle-option',
-  template: `
+    selector: 'fs-toggle-option',
+    template: `
     <div fxLayoutAlign="start center" class="fs-toggle-option" (click)="click()"
       [ngClass]="{ selected: selected }"
       [ngStyle]="style">
@@ -15,8 +17,14 @@ import { Subject } from 'rxjs';
         <ng-content></ng-content>
       </span>
     </div>`,
-  styleUrls: ['./option.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    styleUrls: ['./option.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: true,
+    imports: [
+        NgClass,
+        NgStyle,
+        MatIcon,
+    ],
 })
 export class FsToggleOptionComponent implements OnInit {
 
